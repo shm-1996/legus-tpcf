@@ -15,7 +15,6 @@ import shutil
 import subprocess
 
 #Astropy Data Handling
-from spectral_cube import SpectralCube
 from astropy import units as u
 from astropy.utils.data import get_pkg_data_filename
 from astropy.io import fits
@@ -27,8 +26,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import cmasher as cmr
 mpl.style.use('classic')
-mpl.rc_file('/Users/shm/.matplotlib/matplotlibrc',
-    use_default_template=False)
+# To reproduce plotting settings Menon used
+mpl.rc_file('./matplotlibrc',use_default_template=False)
 
 
 ##### Some global quantities #########

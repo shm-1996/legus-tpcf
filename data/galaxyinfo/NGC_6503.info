@@ -1,0 +1,34 @@
+## Info file for NGC_6503 with relavant info for computing TPCF.
+################################################# 
+
+# Name of Galaxy 
+Name = NGC_6503 
+
+# Distance in Mpc 
+Distance = 6.3 
+
+# Error in Distance in Mpc 
+Error_Distance = 0.5 
+
+# Inclination in degrees 
+Inclination = 75.1 
+
+# Position Angle in degrees 
+Position_Angle = 135.0 
+
+# Number of bins 
+No_Bins = 20 
+
+# Bin Limits in parsec
+Bin_Low = 10 
+Bin_High = 5000 
+
+# Catalog file 
+Catalog_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_6503.tab 
+
+# Fits file 
+Fits_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_6503.fits 
+
+# Region file 
+Region_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_6503.reg 
+

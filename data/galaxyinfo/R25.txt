@@ -1,0 +1,14 @@
+# R25 values in arcmin for the galaxy sample in Menon et al 2021b.
+# All Values obtained from de Vaucouleurs et al 1991
+NGC 1566	4.16
+NGC 3627	4.119
+NGC 0628	5.23
+NGC 3344	3.54
+NGC 5194	5.6
+NGC 5457	14.42
+NGC 6503	3.5
+NGC 1313	4.56
+NGC 7793	4.67
+NGC 3738	1.26
+NGC 4449	3.1
+NGC 5253	2.50

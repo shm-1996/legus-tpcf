@@ -1,0 +1,14 @@
+The info files contain the relavant information required for computing the TPCF for a galaxy. 
+The info files for the galaxies in Menon et al 2021b would be created automatically when you initialise
+an instance of the galaxy. If, however, you would like to perform TPCF analysis for a new galaxy outside
+the sample, you would need to -- in addition to saving a catalog file and a region file/fits file of the galaxy 
+in data/ -- create an info file here. Go through the formats of the other galaxies to see what you would need. 
+Let me know if you have any questions: shyam.menon@anu.edu.au
+
+Other files in the directory:
+1. AveragedSigmaH2.pkl : Pickle file containing the average surface density of molecular gas in the galaxy. Sources listed in Appendix B, Menon et al 2021b.
+2. Calzetti_Table.txt: Table 1 of Calzetti et al 2015, i.e. the LEGUS survey paper. 
+3. GalaxyProps_New.dat: Some updated properties for galaxies which we use instead of that quoted in the above table.
+4. R25.txt : Table containing R25 of all galaxies obtained from de Vaucouleurs et al 1991
+5. SFR_Table_extra_short.txt: Averaged Sigma_SFR for some of the larger galaxies in the FoV of the HST. 
+6. Scale_Radii.dat: Scale radii of galaxies obtained from the Spitzer Survey of Stellar Structure in Galaxies (S4G)

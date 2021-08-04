@@ -1,0 +1,34 @@
+## Info file for NGC_0628 with relavant info for computing TPCF.
+################################################# 
+
+# Name of Galaxy 
+Name = NGC_0628 
+
+# Distance in Mpc 
+Distance = 9.84 
+
+# Error in Distance in Mpc 
+Error_Distance = 0.63 
+
+# Inclination in degrees 
+Inclination = 8.9 
+
+# Position Angle in degrees 
+Position_Angle = 20.7 
+
+# Number of bins 
+No_Bins = 20 
+
+# Bin Limits in parsec
+Bin_Low = 10 
+Bin_High = 5000 
+
+# Catalog file 
+Catalog_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_0628.tab 
+
+# Fits file 
+Fits_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_0628.fits 
+
+# Region file 
+Region_File = /Users/shm/Desktop/Projects/TPCF_StarClusters/data/NGC_0628.reg 
+

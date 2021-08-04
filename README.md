@@ -56,3 +56,5 @@ We use modified versions of the following open-source software in our implementa
 3. [astroML](http://github.com/astroML/astroML) for pair computatations. Citation: [Vanderplas et al 2012](https://ieeexplore.ieee.org/document/6382200). 
 4. [CMasher](https://github.com/1313e/CMasher) for colorbars. 
 5. [regions](https://github.com/astropy/regions)
+6. [emcee](https://github.com/dfm/emcee) for fitting with an MCMC. 
+7. [corner](https://github.com/dfm/corner.py) for plotting corner plots of the posterior distribution. 

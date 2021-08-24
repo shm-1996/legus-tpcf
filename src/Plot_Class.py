@@ -21,14 +21,30 @@ class myPlot():
         
         
         
-    def plot_TPCF(self,save=False,function='best',age='both',filename=None,omega1=True,
+    def plot_TPCF(self,age='both',function=None,save=False,filename=None,omega1=True,
         axs = None,sec_axis=True,**kwargs):
         """
         Plot TPCF of a galaxy
 
         Parameters
         ----------
-        None
+        age : string
+            Age subset to plot, i.e. young or old. Can be None to plot combined, or both.
+        function : string
+            Fitted functional form to overplot, can be None, 'singlepl','piecewise',
+            'singletrunc' or 'best', for plotting the best-fit among the three
+        save : Boolean
+            Flag to save the plot as a PDF. 
+        filename: string
+            Filename to save plot as. 
+        omega1 : Boolean
+            Plot 1+Omega, if false plots Omega
+        axs : Matplotlib axes instance
+            Plot in this axis. Creates a new axis if not provided. 
+        sec_axis: Boolean
+            Flag to plot the secondary axis for linear distance
+        **kwargs: 
+            Other optional parameters for plotting that go directly into formatting.
         
         Returns
         -------
@@ -48,7 +64,7 @@ class myPlot():
             raise ValueError("This age group cannot be plotted.")
 
         lw = kwargs.pop('lw',0.5)
-        if(age=='young'):
+        if(age in ['young','both']):
             lc = kwargs.pop('c','#F56B5C')
         elif(age == 'old'):
             lc = kwargs.pop('c','#4591F5')
@@ -68,6 +84,8 @@ class myPlot():
             axs.errorbar(separation_bins,1+corr_fit,yerr=dcorr_fit,
             fmt=fmt,lw=lw,c=lc,label=r'$T <= 10 \, \mathrm{Myr}$')
         if(age in ['both','old']):
+            if(age == 'both'):
+                lc = kwargs.pop('c','#4591F5')
             separation_bins,corr_fit,dcorr_fit = filter_bins(self.galaxy.bin_centres,
                 self.galaxy.ocorr,self.galaxy.odcorr)
             axs.errorbar(separation_bins,1+corr_fit,yerr=dcorr_fit,
@@ -396,6 +414,19 @@ class myPlot():
             plt.show()
 
     def class_distribution(self,save=False,filename=None):
+        """
+        Plot the distribution of clusters lying in different cluster classes. 
+        Parameters:
+        ----------
+            save: Boolean
+                Flag to save the plot
+            filename: String
+                File name of the plot
+        Returns
+        -------
+        None
+        
+        """
         #Read file for distribution of classes
         file = np.loadtxt(self.galaxy.catalog_file)
         N0 = np.size(np.where(file[:,33]==0))
@@ -464,7 +495,7 @@ class myPlot():
 
     def age_histogram(self,save=False,filename=None):
         """
-        Plot distribution of agees in each class of clusters.
+        Plot distribution of ages in each class of clusters.
         Parameters
         ----------
         save : boolean
@@ -608,7 +639,7 @@ class myPlot():
 
     def massage_image(self,save=False,filename=None):
         """
-        Overplot clusters on optical HST image of galaxy, colored by age. 
+        Overplot clusters on optical HST image of galaxy, colored by age and mass. 
         Parameters
         ----------
         save : boolean
@@ -784,6 +815,28 @@ class myPlot():
 #Some useful utility functions for plotting
 
 def filter_bins(bins,corr,dcorr):
+    """
+    Filter non-physical bins where the 1+omega is negative or the
+    error is higher than the correlation. The returned quantities
+    can be directly plotted. 
+    Parameters
+    ----------
+    bins : ndarray
+        Array of bins where TPCF is calculated
+    corr: ndarray
+        Array of TPCF values at these bins
+    dcorr: ndarray
+        Array of error on the above TPCF values
+    Returns
+    -------
+    separation_bins : ndarray
+        Filtered bins
+    corr : ndarray
+        corr_fit : ndarray
+        Filtered corr function values
+    dcorr : ndarray
+        Filtered error values
+    """
 
     #Isolate non-zero correlation points
     indices_err = np.abs(corr)>np.abs(dcorr)
@@ -798,6 +851,24 @@ def filter_bins(bins,corr,dcorr):
     return separation_bins, corr_fit, dcorr_fit
 
 def bbox(img):
+    """
+    Filter out pixels in an image outside the bounding box of non-zero pixel values. 
+
+    Parameters
+    ----------
+    image : 2D ndarray
+        Array containing the pixel values of the image
+    Returns
+    -------
+    rmin : integer
+        Minimum row index
+    rmax : integer
+        Maximum row index
+    cmin : integer
+        Minimum column index
+    cmin : integer
+        Maximum column index
+    """
     rows = np.any(img, axis=1)
     cols = np.any(img, axis=0)
     rmin, rmax = np.where(rows)[0][[0, -1]]
@@ -805,6 +876,24 @@ def bbox(img):
     return rmin, rmax, cmin, cmax
 
 def deproject_region_centre(region,i,xpix_c,ypix_c,galaxy_class):
+    """
+    Deproject the region file of the galaxy about the galaxy centre. 
+    Parameters:
+    -------
+        region: ds9 region Instance array
+            Array of Region instance of the galaxy to deproject
+        i : integer
+            The index containing the specific region to deproject
+        xpix_c : float
+            Centre of the galaxy in pixel coordinates
+        ypix_c : float
+            Centre of the galaxy in pixel coordinates
+        galaxy_class: Instance of Class Galaxy
+            The instance of the galaxy class
+    Returns:
+    -------
+    None
+    """
     #rotate clockwise by angle PA
     region_rotated = region[i].rotate(regions.PixCoord(xpix_c,ypix_c),-galaxy_class.pa*u.deg)
     try:
@@ -821,6 +910,21 @@ def deproject_region_centre(region,i,xpix_c,ypix_c,galaxy_class):
     return regions_dep
 
 def get_separations(sides,pl,parsec=True):
+    """
+    Get the length of the sides of the polygo FoV observed in the galaxy. 
+    Parameters:
+    -------
+        sides: Tuple
+            Tuple of the vertices of the FoV polygon 
+        pl : Class Instance of Plot_Class
+            The plot_class instance for this galaxy
+        parsec : Boolean
+            Flag to return sides in parsec units, otherwise in angular separation
+    Returns:
+    -------
+        sizes : List
+            List of the length of sides of the FoV polygon
+    """
     i = 0
     sizes = []
     while i<np.size(sides):
